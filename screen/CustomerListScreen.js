@@ -37,34 +37,7 @@ export default class CustomerListScreen extends React.Component {
                         this.key = text || 'undefined'
                     }}
                 />
-                <FlatList
-                    data={this.state.data}
-                    renderItem={({ item }) =>
-                        //navigate때 넘겨주는 값은 하렛 완성되면 그 때 보고 결정하기 ( 지금은 그냥 key로 )
-                        (<TouchableOpacity style={styles.itemStyle} onPress={() => this.props.navigation.navigate('DetailCustomer', { itemId: item.key })}>
-                            <TextIcon title={item.name}
-                                icon={item.sex == 'm' ? <AntDesign name='man' size={15} color='gray'></AntDesign> : <AntDesign name='woman' size={15} color='gray'></AntDesign>}></TextIcon>
-                            <View>
-                                <Ionicons name='ios-arrow-forward' size={20} color='gray'></Ionicons>
-                            </View>
-                        </TouchableOpacity>)
-                    }
-                    keyExtractor={(item, index) => item.name + index}
-                    ItemSeparatorComponent={() => (
-                        <View style={{ height: StyleSheet.hairlineWidth, backgroundColor: 'black' }} />
-                    )}
-                    refreshing={this.state.isRefreshing}
-                    onRefresh={() => {
-                        this.setState({
-                            isRefreshing: true
-                        })
-                        setTimeout(() => {
-                            this.setState({
-                                isRefreshing: false
-                            })
-                        }, 2000);
-                    }}
-                />
+                
             </View>
         )
     }
