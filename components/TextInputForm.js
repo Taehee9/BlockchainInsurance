@@ -17,35 +17,12 @@ export default class TextInputForm extends React.Component {
                     placeholder={this.props.placeholder}
                     secureTextEntry={this.props.secureTextEntry}
                     onChangeText={this.props.onChangeText}
+                    returnKeyType={this.props.returnKeyType}
+                    onSubmitEditing={this.props.onSubmitEditing}
+                    value={this.props.value}
                 ></TextInput>
             </View>
         )
     }
 }
-
-
-const styles = StyleSheet.create({
-    input: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        width: '80%',
-        height: 40,
-        paddingLeft: 10,
-        borderColor: 'black',
-        borderWidth: StyleSheet.hairlineWidth,
-        borderRadius: 5,
-        backgroundColor: '#fff',
-        color: 'gray',
-        shadowColor: "gray",
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-        shadowOffset: {
-            height: 1,
-            width: 0,
-        },
-        marginTop: 5,
-        marginBottom: 5
-    }
-});
 

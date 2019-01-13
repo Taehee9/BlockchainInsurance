@@ -11,7 +11,7 @@ export default class TextIcon extends React.Component {
                 <View style={{ paddingLeft: '3%' }}>
                     {this.props.icon ?
                         this.props.icon
-                        : <Ionicons name={this.props.name} size={20} color='gray' ></Ionicons>
+                        : <Ionicons name={this.props.name} size={20} color='#A4A4A4' ></Ionicons>
                     }
                 </View>
             </View>
@@ -23,7 +23,7 @@ export default class TextIcon extends React.Component {
 const styles = StyleSheet.create({
     font: {
         fontSize: 15,
-        color: 'gray',
+        color: '#A4A4A4',
     }
 });
 

@@ -9,12 +9,15 @@ import MainScreen from './screen/MainScreen';
 import WelcomeScreen from './screen/WelcomeScreen';
 import PlanScreen from './screen/PlanScreen';
 import DetailCustomerScreen from './screen/DetailCustomerScreen';
+import TodoListScreen from './screen/TodoListScreen';
+import CalendarScreen from './screen/CalendarScreen';
 
 // Project 기본 사항. 
 // App이름 : KALON
 // 기본색상 : #F5DA81 (navigation header color - 노란색)
 // backUpColor : #F7D358 (조금 진한 노란색)
 // 배경 회색 : #D8D8D8
+
 
 // const Settings = createStackNavigator({
 //   Settings: {
@@ -48,6 +51,13 @@ const MainNavigator = createStackNavigator({
   },
   MainAlert: {
     screen: MainAlertScreen,
+  },
+  //todo랑 calendar 구현해야할 것 남았음!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  Calendar :{
+    screen: CalendarScreen
+  },
+  Todo :{
+    screen: TodoListScreen
   }
 });
 
@@ -90,18 +100,18 @@ const TabNavigator = createBottomTabNavigator({
 const AppNavigator = createStackNavigator({
   Welcome: {
     //screen: WelcomeScreen,
-    screen: TabNavigator,
-    navigationOptions: {
-      header: null
-    }
+    screen: TodoListScreen,
+    // navigationOptions: {
+    //   header: null
+    // }
   },
   TabMain: {
     screen: TabNavigator
   },
 },
-  {
-    headerMode: 'none',
-  }
+  // {
+  //   headerMode: 'none',
+  // }
 );
 const AppContainer = createAppContainer(AppNavigator);
 
