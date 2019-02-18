@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, Alert, Dimensions, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'
 
 
@@ -9,7 +9,7 @@ export default class TextInputForm extends React.Component {
             <View style={this.props.style}>
                 {this.props.icon ?
                     this.props.icon
-                    : <AntDesign name={this.props.name} size={20} color='gray' ></AntDesign>
+                    : <AntDesign name={this.props.name} size={20} color='gray'></AntDesign>
                 }
                 <TextInput
                     style={{ paddingLeft: 7, flex: 1, height: 40 }}
