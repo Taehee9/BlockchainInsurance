@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import { AntDesign } from '@expo/vector-icons';
 
+import MainPage from './screen/MainPage';
 import CustomerListScreen from './screen/CustomerListScreen';
 import MainAlertScreen from './screen/MainAlertScreen';
 import MainScreen from './screen/MainScreen';
@@ -53,7 +54,8 @@ const CustomerManagement = createStackNavigator({
 
 const MainNavigator = createStackNavigator({
   MainHome: {
-    screen: MainScreen
+    screen: MainPage
+    //screen: MainScreen
   },
   MainAlert: {
     screen: MainAlertScreen,
