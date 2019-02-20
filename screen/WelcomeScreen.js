@@ -9,11 +9,11 @@ export default class WelcomeScreen extends React.Component {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <Image style={{ width: '40%', height: '30%' }} source={require('../assets/umbrella.jpg')} />
-        <Text style={{ fontSize: 30, color: 'gray', marginBottom: 15 }}>INSURANCE</Text>
+        <Text style={{ fontSize: 30, color: 'gray', marginBottom: 15 }}>보인다</Text>
         <TextInputForm style={styles.input} placeholder="Username" name="user" />
         <TextInputForm style={styles.input} placeholder="Password" name="key" secureTextEntry={true} />
         <View style={{ flexDirection: 'row' }}>
-          <RoundButton title="회원가입" onPress={() => this.props.navigation.navigate('Registeruser')} />
+          <RoundButton title="회원가입" onPress={() => this.props.navigation.navigate('RegisterUser')} />
           <RoundButton title="로그인" onPress={() => this.props.navigation.navigate('MainHome')} />
         </View>
       </KeyboardAvoidingView>

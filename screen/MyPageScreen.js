@@ -25,6 +25,11 @@ export default class MyPageScreen extends React.Component {
 
         if (!result.cancelled) {
             this.setState({ image: result.uri });
+        } else {
+            this.props.dispatch({
+                type: 'PROFILE_IMAGE',
+                image: result
+            });
         }
     };
     state = {
@@ -47,7 +52,7 @@ export default class MyPageScreen extends React.Component {
                             <EvilIcons name="pencil" size={20} color='gray' />
                         </View>
                     </TouchableOpacity>
-                </View>
+                </View >
 
                 <View>
                     <View style={{ padding: 10, paddingLeft: 18, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#D8D8D8', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#D8D8D8' }}>
@@ -67,12 +72,12 @@ export default class MyPageScreen extends React.Component {
                     <BasicInfo main='이메일' side='th9509@gmail.com' />
 
                     <View style={{ padding: 10, paddingLeft: 18, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#D8D8D8', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#D8D8D8' }}>
-                        <Text style={{ fontSize: 17 }}>개인정보 이용내역</Text>
+                        <Text style={{ fontSize: 17 }}>설계사 평가 지표</Text>
                     </View>
                     <View style={styles.myPageViewStyle}>
-                        <Text style={styles.fontStyle}>내 개인정보가 어떻게 사용되고 있는지 확인해 보세요.</Text>
+                        <Text style={styles.fontStyle}>내 평가 확인하기</Text>
                     </View>
-                    <TouchableOpacity style={styles.buttonStyle} >
+                    <TouchableOpacity style={styles.buttonStyle} onPress={() => this.props.navigation.navigate('EvaluationChart')} >
                         <Text style={{ color: "white" }}>조회하기</Text>
                     </TouchableOpacity>
 

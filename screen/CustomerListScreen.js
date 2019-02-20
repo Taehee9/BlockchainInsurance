@@ -17,6 +17,7 @@ export default class CustomerListScreen extends React.Component {
         super(props);
         this.state = {
             isRefreshing: false,
+            clientData: [],
             data: [
                 {
                     key: 1, name: '김유준', sex: '남성', 생년월일: '1989-01-10', 연락처: '010-4969-9947',
@@ -45,6 +46,7 @@ export default class CustomerListScreen extends React.Component {
             ]
         }
     }
+
     priceCheck(data) {
         price = 0;
         for (let i = 0; i < data.length; i++) {
@@ -52,7 +54,35 @@ export default class CustomerListScreen extends React.Component {
         }
         return price;
     }
+    fetchHyperledgerInsuranceData() {
+        return fetch(
+            `http://192.168.0.9:8080/api/query/queryAllContractedInsurance`
+        )
+            .then(response => response.json())
+            .catch(error => {
+                console.error(error);
+            });
+    }
+    fetchHyperledgerClientData() {
+        return fetch(
+            `http://192.168.0.9:8080/api/query/queryAllClients`
+        )
+            .then(response => response.json())
+            .catch(error => {
+                console.error(error);
+            });
+    }
+    componentDidMount() {
+        this.fetchHyperledgerClientData().then(items => {
+            this.setState({
+                clientData: JSON.parse(items.response)
+            })
+        });
+    }
+
     render() {
+        console.log(clientDataMap);
+        let clientDataMap = this.state.clientData.map(item => item.Record)
         return (
             <View style={styles.container}>
                 <View style={{ flexDirection: 'row', backgroundColor: 'white', width: '100%', height: 50, alignItems: 'center', paddingLeft: 10 }}>
@@ -75,7 +105,7 @@ export default class CustomerListScreen extends React.Component {
                 <View style={{ width: '100%', height: StyleSheet.hairlineWidth, backgroundColor: '#D8D8D8' }} />
                 <FlatList
                     style={{ paddingLeft: 2, backgroundColor: 'white' }}
-                    data={this.state.data}
+                    data={clientDataMap}
                     renderItem={({ item }) => (
                         <TouchableOpacity
                             onPress={() => { this.props.navigation.navigate('DetailCustomer', { itemId: item }) }}
@@ -85,14 +115,10 @@ export default class CustomerListScreen extends React.Component {
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={{ fontSize: 15, color: 'gray' }}>{item.sex}</Text>
                                     <View style={{ width: 5 }} />
-                                    <Text style={{ fontSize: 15, color: 'gray' }}>{item.생년월일}</Text>
+                                    <Text style={{ fontSize: 15, color: 'gray' }}>{item.residentNumber}</Text>
                                 </View>
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-                                <Text style={{ fontSize: 20, color: 'gray' }}>월 {this.priceCheck(item.insuranceItem)}</Text>
-                                <View style={{ width: 10 }} />
-                                <Text style={{ fontSize: 20, color: 'gray' }}>보유계약 {item.insuranceItem.length}건</Text>
-                            </View>
+
                         </TouchableOpacity>
                     )}
                     keyExtractor={(index, item) => index + item}

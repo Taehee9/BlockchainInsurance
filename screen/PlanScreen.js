@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Picker } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import { AntDesign } from '@expo/vector-icons'
-import CheckBox from 'react-native-check-box'
+import { AntDesign } from '@expo/vector-icons';
+import CheckBox from 'react-native-check-box';
+import Plan from '../components/Plan';
 
 export default class PlanScreen extends React.Component {
     static navigationOptions = () => {
@@ -16,9 +17,16 @@ export default class PlanScreen extends React.Component {
         super(props);
         this.state = {
             companyList: undefined,
+            isRefreshing: false
         }
     }
     render() {
+        const data = [
+            { key: 1, name: 'hi' },
+            { key: 2, name: 'h22i' },
+            { key: 3, name: 'h333i' },
+            { key: 4, name: 'h444i' }
+        ]
         const companyList = [
             {
                 label: 'KB생명',
@@ -96,18 +104,18 @@ export default class PlanScreen extends React.Component {
         };
         return (
             <View style={styles.container}>
-                <View style={{ width: 70, height: 30, right: 130, marginBottom: 7, borderRadius: 5, backgroundColor: '#F7D358', justifyContent: 'center', alignItems: 'center' }}>
+                <View style={styles.titleStyle}>
                     <Text style={{ color: 'white' }}>고객정보</Text>
                 </View>
-                <View style={{ width: '90%', height: 60, flexDirection: 'column', borderColor: 'gray', borderWidth: StyleSheet.hairlineWidth, alignItems: 'center', justifyContent: 'center' }}>
-                    <View style={{ height: 30, flexDirection: 'row', alignItems: 'center', borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth }}>
-                        <View style={{ width: '20%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
+                <View style={styles.backStyle}>
+                    <View style={styles.inStyle}>
+                        <View style={[{ width: '20%' }, styles.textBoxStyle]}>
                             <Text>이름</Text>
                         </View>
-                        <View style={{ width: '40%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
+                        <View style={[{ width: '40%' }, styles.textBoxStyle]}>
                             <Text>주민등록번호</Text>
                         </View>
-                        <View style={{ width: '20%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
+                        <View style={[{ width: '20%' }, styles.textBoxStyle]}>
                             <Text>나이</Text>
                         </View>
                         <View style={{ width: '20%', paddingLeft: 10 }}>
@@ -115,13 +123,13 @@ export default class PlanScreen extends React.Component {
                         </View>
                     </View>
                     <View style={{ height: 30, flexDirection: 'row', alignItems: 'center' }}>
-                        <View style={{ width: '20%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
+                        <View style={[{ width: '20%' }, styles.textBoxStyle]}>
                             <TextInput placeholder='hihi' />
                         </View>
-                        <View style={{ width: '40%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
+                        <View style={[{ width: '40%' }, styles.textBoxStyle]}>
                             <TextInput />
                         </View>
-                        <View style={{ width: '20%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
+                        <View style={[{ width: '20%' }, styles.textBoxStyle]}>
                             <TextInput />
                         </View>
                         <View style={{ width: '20%', paddingLeft: 10 }}>
@@ -130,10 +138,10 @@ export default class PlanScreen extends React.Component {
                     </View>
                 </View>
 
-                <View style={{ width: 70, height: 30, right: 130, marginBottom: 7, marginTop: 10, borderRadius: 5, backgroundColor: '#F7D358', justifyContent: 'center', alignItems: 'center' }}>
+                <View style={[styles.titleStyle, { marginTop: 20 }]}>
                     <Text style={{ color: 'white' }}>보험정보</Text>
                 </View>
-                <View style={{ width: '90%', height: 60, flexDirection: 'column', borderColor: 'gray', borderWidth: StyleSheet.hairlineWidth, alignItems: 'center', justifyContent: 'center' }}>
+                <View style={styles.backStyle}>
                     <View style={{ height: 30, flexDirection: 'row', alignItems: 'center', borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth }}>
                         <View style={{ width: '40%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
                             <Text>회사명</Text>
@@ -173,15 +181,15 @@ export default class PlanScreen extends React.Component {
                         </View>
                     </View>
                 </View>
-                <View style={{ width: '90%', height: 60, flexDirection: 'column', borderColor: 'gray', borderWidth: StyleSheet.hairlineWidth, alignItems: 'center', justifyContent: 'center', marginTop: 2 }}>
-                    <View style={{ height: 30, flexDirection: 'row', alignItems: 'center', borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth }}>
-                        <View style={{ width: '30%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
+                <View style={[styles.backStyle, { marginTop: 5 }]}>
+                    <View style={styles.inStyle}>
+                        <View style={[styles.textBoxStyle, { width: '30%' }]}>
                             <Text>납입기간</Text>
                         </View>
-                        <View style={{ width: '40%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
+                        <View style={[styles.textBoxStyle, { width: '40%' }]}>
                             <Text>보장기간</Text>
                         </View>
-                        <View style={{ width: '30%', paddingLeft: 10 }}>
+                        <View style={[styles.textBoxStyle, { width: '30%' }]}>
                             <Text>납입주기</Text>
                         </View>
                     </View>
@@ -241,110 +249,62 @@ export default class PlanScreen extends React.Component {
                 </View>
 
 
-                <View style={{ marginTop: 20, width: '90%', height: 60, flexDirection: 'column', borderColor: 'gray', borderWidth: StyleSheet.hairlineWidth, alignItems: 'center', justifyContent: 'center' }}>
-                    <View style={{ height: 30, flexDirection: 'row', alignItems: 'center', borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth }}>
-                        <View style={{ width: '10%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
+                <View style={[styles.backStyle, { height: 120, marginTop: 10 }]}>
+                    <View style={styles.inStyle}>
+                        <View style={[styles.textBoxStyle, { width: '10%' }]}>
                             <Text></Text>
                         </View>
-                        <View style={{ width: '40%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
+                        <View style={[styles.textBoxStyle, { width: '40%' }]}>
                             <Text>특약명</Text>
                         </View>
-                        <View style={{ width: '25%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
+                        <View style={[styles.textBoxStyle, { width: '25%' }]}>
                             <Text>보장금액</Text>
                         </View>
                         <View style={{ width: '25%', paddingLeft: 10 }}>
                             <Text>만기</Text>
                         </View>
                     </View>
-                    <View style={{ height: 30, flexDirection: 'row', alignItems: 'center' }}>
-                        <View style={{ width: '10%', borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
-                            <CheckBox
-                                onClick={() => {
-                                    this.setState({
-                                        isChecked: !this.state.isChecked
-                                    })
-                                }}
-                                isChecked={this.state.isChecked}
-                                uncheckedCheckBoxColor='#A4A4A4'
-                                checkedCheckBoxColor='#A4A4A4'
-                            />
-                        </View>
-                        <View style={{ width: '40%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
-                            <TextInput />
-                        </View>
-                        <View style={{ width: '25%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
-                            <TextInput />
-                        </View>
-                        <View style={{ width: '25%', paddingLeft: 10 }}>
-                            <TextInput />
-                        </View>
-                    </View>
-                </View>
-                <View style={{ width: '90%', height: 30, flexDirection: 'column', borderColor: 'gray', borderWidth: StyleSheet.hairlineWidth, alignItems: 'center', justifyContent: 'center' }}>
-                    <View style={{ height: 30, flexDirection: 'row', alignItems: 'center' }}>
-                        <View style={{ width: '10%', borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
-                            <CheckBox
-                                onClick={() => {
-                                    this.setState({
-                                        isChecked: !this.state.isChecked
-                                    })
-                                }}
-                                isChecked={this.state.isChecked}
-                                uncheckedCheckBoxColor='#A4A4A4'
-                                checkedCheckBoxColor='#A4A4A4'
-                            />
-                        </View>
-                        <View style={{ width: '40%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
-                            <TextInput />
-                        </View>
-                        <View style={{ width: '25%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
-                            <TextInput />
-                        </View>
-                        <View style={{ width: '25%', paddingLeft: 10 }}>
-                            <TextInput />
-                        </View>
-                    </View>
-                </View>
-                <View style={{ width: '90%', height: 30, flexDirection: 'column', borderColor: 'gray', borderWidth: StyleSheet.hairlineWidth, alignItems: 'center', justifyContent: 'center' }}>
-                    <View style={{ height: 30, flexDirection: 'row', alignItems: 'center' }}>
-                        <View style={{ width: '10%', borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
-                            <CheckBox
-                                onClick={() => {
-                                    this.setState({
-                                        isChecked: !this.state.isChecked
-                                    })
-                                }}
-                                isChecked={this.state.isChecked}
-                                uncheckedCheckBoxColor='#A4A4A4'
-                                checkedCheckBoxColor='#A4A4A4'
-                            />
-                        </View>
-                        <View style={{ width: '40%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
-                            <TextInput />
-                        </View>
-                        <View style={{ width: '25%', paddingLeft: 10, borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
-                            <TextInput />
-                        </View>
-                        <View style={{ width: '25%', paddingLeft: 10 }}>
-                            <TextInput />
-                        </View>
-                    </View>
+                    <FlatList
+                        style={{ width: '100%', height: 90 }}
+                        data={data}
+                        renderItem={({ item }) => (
+                            <Plan />
+                        )}
+                        keyExtractor={(index, item) => index + item}
+                        ItemSeparatorComponent={() => (<View style={{ height: StyleSheet.hairlineWidth, backgroundColor: '#D8D8D8' }} />)}
+                        refreshing={this.state.isRefreshing}
+                        onRefresh={() => {
+                            this.setState({
+                                isRefreshing: true
+                            })
+                            setTimeout(() => {
+                                this.setState({
+                                    isRefreshing: false
+                                })
+                            }, 2000);
+                        }}
+                    />
                 </View>
 
 
-                <View style={{ marginTop: 30, width: 70, height: 30, right: 130, marginBottom: 7, borderRadius: 5, backgroundColor: '#F7D358', justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ color: 'white' }}>보험료조회</Text>
+                <View style={{ flexDirection: 'row', marginTop: 30 }}>
+                    <TouchableOpacity style={[styles.titleStyle, { marginRight: 5, left: 100 }]}>
+                        <Text style={{ color: 'white' }}>보험료조회</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.titleStyle, { left: 100 }]}>
+                        <Text style={{ color: 'white' }}>계약</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={{ width: '90%', paddingLeft: 10, height: 30, flexDirection: 'row', borderColor: 'gray', borderWidth: StyleSheet.hairlineWidth, alignItems: 'center' }}>
-                    <View style={{ width: '50%', borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth, justifyContent: 'baseline' }}>
+                    <View style={{ width: '50%', borderRightColor: 'gray', borderRightWidth: StyleSheet.hairlineWidth }}>
                         <Text>예상보험료</Text>
                     </View>
 
                     <View style={{ width: '50%', paddingLeft: 10 }}>
-                        <TextInput placeholder='hihi' />
+                        <Text></Text>
                     </View>
                 </View>
-            </View>
+            </View >
         );
     }
 }
@@ -354,9 +314,40 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    titleStyle: {
+        width: 70,
+        height: 30,
+        borderRadius: 5,
+        backgroundColor: '#F7D358',
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 7,
+        right: 135
     },
+    backStyle: {
+        width: '90%',
+        height: 60,
+        flexDirection: 'column',
+        borderColor: 'gray',
+        borderWidth: StyleSheet.hairlineWidth,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    inStyle: {
+        height: 30,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomColor: 'gray',
+        borderBottomWidth: StyleSheet.hairlineWidth
+    },
+    textBoxStyle: {
+        paddingLeft: 10,
+        borderRightColor: 'gray',
+        borderRightWidth: StyleSheet.hairlineWidth
+    }
 });
 const pickerSelectStyles = StyleSheet.create({
     inputIOS: {

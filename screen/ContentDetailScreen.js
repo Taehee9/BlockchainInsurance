@@ -24,7 +24,7 @@ export default class ContentDetailScreen extends React.Component {
                         shouldPlay: true,
                         resizeMode: Video.RESIZE_MODE_CONTAIN,
                         source: {
-                            uri: itemUri,
+                            uri: itemUri
                         },
                     }}
                     isPortrait={true}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, SectionList, Image, TouchableOpacity, Linking, Alert } from 'react-native';
+import { StyleSheet, Text, View, SectionList, Image, TouchableOpacity, Linking, FlatList } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CustomerMemo from '../components/CustomerMemo';
 
@@ -14,7 +14,8 @@ export default class DetailCustomerScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isModalVisible: false
+            isModalVisible: false,
+            isRefreshing: false
         }
     }
     calculateAge(birth) {
@@ -72,42 +73,42 @@ export default class DetailCustomerScreen extends React.Component {
                 </View>
 
                 <View style={{ width: '100%', height: 60, justifyContent: 'center', paddingLeft: 10 }}>
-                    <Text>보유계약 {customer.insuranceItem.length}건</Text>
+                    <Text style={{ fontSize: 13 }}>보유계약 {customer.insuranceItem.length}건</Text>
                     <Text>월납보험료 {this.priceCheck(customer.insuranceItem)}원</Text>
                 </View>
 
-                <View >
-                    <View style={{ width: 375, height: 40, paddingLeft: 10, borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth }}>
-                        <Text style={{ fontSize: 22, color: 'gray' }}>보험 상세보기</Text>
-                    </View>
-                    <SectionList
-                        sections={[{
-                            title: '보험 리스트',
-                            data: customer.insuranceItem
-                        }]}
-                        renderSectionHeader={({ section: { title } }) => (
-                            <View style={{ width: 375, height: 35, justifyContent: 'center', paddingLeft: 10, borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth }}>
-                                <Text style={{ fontSize: 20, color: 'gray' }}>{title}</Text>
-                            </View>
-                        )}
-                        renderItem={({ item }) => (
-                            <View style={{ flexDirection: 'column', padding: 20 }}>
-                                <Image source={{ uri: this.companyLogo(item.logo) }} style={{ width: 50, height: 30 }} />
-                                <View style={{ height: 15 }} />
-                                <Text style={{ fontSize: 20 }}>보험이름 : {item.name}</Text>
-                                <View style={{ height: 10 }} />
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <Text style={{ fontSize: 16 }}>피보험자 : {customer.name}</Text>
-                                    <Text style={{ fontSize: 16 }}>월 {item.price}원</Text>
-                                </View>
-                            </View>
-                        )}
-                        ItemSeparatorComponent={() => (
-                            <View style={{ height: StyleSheet.hairlineWidth, backgroundColor: 'gray' }} />
-                        )}
-                        keyExtractor={(index, item) => { index + item + customer }}
-                    />
+                <View style={{ width: 375, height: 40, paddingLeft: 10, borderBottomColor: 'gray', borderBottomWidth: StyleSheet.hairlineWidth }}>
+                    <Text style={{ fontSize: 22, color: 'gray' }}>보험 상세보기</Text>
                 </View>
+                <FlatList
+                    style={{ width: '100%' }}
+                    data={customer.insuranceItem}
+                    renderItem={({ item }) => (
+                        <View style={{ flexDirection: 'column', padding: 20 }}>
+                            <Image source={{ uri: this.companyLogo(item.logo) }} style={{ width: 50, height: 30 }} />
+                            <View style={{ height: 15 }} />
+                            <Text style={{ fontSize: 20 }}>보험이름 : {item.name}</Text>
+                            <View style={{ height: 10 }} />
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Text style={{ fontSize: 16 }}>피보험자 : {customer.name}</Text>
+                                <Text style={{ fontSize: 16 }}>월 {item.price}원</Text>
+                            </View>
+                        </View>
+                    )}
+                    keyExtractor={(index, item) => index + item}
+                    ItemSeparatorComponent={() => (<View style={{ height: StyleSheet.hairlineWidth, backgroundColor: '#D8D8D8' }} />)}
+                    refreshing={this.state.isRefreshing}
+                    onRefresh={() => {
+                        this.setState({
+                            isRefreshing: true
+                        })
+                        setTimeout(() => {
+                            this.setState({
+                                isRefreshing: false
+                            })
+                        }, 2000);
+                    }}
+                />
             </View>
         );
     }
