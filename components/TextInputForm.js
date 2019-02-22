@@ -16,6 +16,7 @@ export default class TextInputForm extends React.Component {
                     underlineColorAndroid="transparent"
                     placeholder={this.props.placeholder}
                     secureTextEntry={this.props.secureTextEntry}
+                    returnKeyLabel={this.props.returnKeyLabel}
                     onChangeText={this.props.onChangeText}
                     returnKeyType={this.props.returnKeyType}
                     onSubmitEditing={this.props.onSubmitEditing}

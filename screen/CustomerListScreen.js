@@ -105,7 +105,7 @@ export default class CustomerListScreen extends React.Component {
                 <View style={{ width: '100%', height: StyleSheet.hairlineWidth, backgroundColor: '#D8D8D8' }} />
                 <FlatList
                     style={{ paddingLeft: 2, backgroundColor: 'white' }}
-                    data={clientDataMap}
+                    data={this.state.data}
                     renderItem={({ item }) => (
                         <TouchableOpacity
                             onPress={() => { this.props.navigation.navigate('DetailCustomer', { itemId: item }) }}

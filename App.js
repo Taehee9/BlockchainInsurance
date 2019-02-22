@@ -23,6 +23,7 @@ import { createStore } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import rootReducer from './reducers';
+import TodoListScreen from './screen/TodoListScreen';
 
 const persistConfig = {
   key: 'root',
@@ -116,6 +117,12 @@ const TabNavigator = createBottomTabNavigator({
     }
 );
 
+const TodoList = createStackNavigator({
+    TodoList:{
+        screen:TodoListScreen
+    }
+})
+
 const RegisterUser = createStackNavigator({
     RegisterUser:{
         screen:RegisterUserScreen
@@ -130,8 +137,8 @@ const EvaluationChart = createStackNavigator({
 
 const AppNavigator = createStackNavigator({
     Welcome: {
-        screen: WelcomeScreen,
-        //screen: TabNavigator,
+        screen:WelcomeScreen,
+        //screen: TodoListScreen,
         navigationOptions: {
             header: null
         }
@@ -146,6 +153,12 @@ const AppNavigator = createStackNavigator({
         screen: RegisterUser,
         navigationOptions: {
             header: null
+        }
+    },
+    TodoList:{
+        screen:TodoList,
+        navigationOptions:{
+            header : null
         }
     },
     EvaluationChart: {

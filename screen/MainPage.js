@@ -70,7 +70,7 @@ class MainPage extends React.Component {
 
                     <View style={{ flexDirection: 'row' }}>
                         <HomeButton title='일정관리' iconName='inbox' onPress={() => this.props.navigation.navigate('Calendar')} />
-                        <HomeButton title='해야 할 일' iconName='inbox' onPress={() => this.props.navigation.navigate('Todo')} />
+                        <HomeButton title='해야 할 일' iconName='inbox' onPress={() => this.props.navigation.navigate('TodoList')} />
                     </View>
 
                     <View style={{width:'100%', height: 190}}>
