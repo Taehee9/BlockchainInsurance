@@ -17,27 +17,21 @@ import ContentsScreen from './screen/ContentsScreen';
 import ContentDetailScreen from './screen/ContentDetailScreen';
 import EvaluationChartScreen from './screen/EvaluationChartScreen';
 
+import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import rootReducer from './reducers';
 
-// Project 기본 사항. 
-// App이름 : KALON
-// 기본색상 : #F5DA81 (navigation header color - 노란색)
-// backUpColor : #F7D358 (조금 진한 노란색)
-// 배경 회색 : #D8D8D8
-
 const persistConfig = {
-    key: 'root',
-    storage,
+  key: 'root',
+  storage,
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 let store = createStore(persistedReducer)
-
-
+let persistor = persistStore(store)
 
 const Settings = createStackNavigator({
     Settings: {
@@ -116,11 +110,23 @@ const TabNavigator = createBottomTabNavigator({
             },
         }),
         tabBarOptions: {
-            activeTintColor: '#F7D358',
+            activeTintColor: '#ffdb00',
             inactiveTintColor: 'gray',
         },
     }
 );
+
+const RegisterUser = createStackNavigator({
+    RegisterUser:{
+        screen:RegisterUserScreen
+    }
+})
+
+const EvaluationChart = createStackNavigator({
+    EvaluationChart:{
+        screen:EvaluationChartScreen
+    }
+})
 
 const AppNavigator = createStackNavigator({
     Welcome: {
@@ -137,10 +143,16 @@ const AppNavigator = createStackNavigator({
         }
     },
     RegisterUser: {
-        screen: RegisterUserScreen
+        screen: RegisterUser,
+        navigationOptions: {
+            header: null
+        }
     },
     EvaluationChart: {
-        screen: EvaluationChartScreen
+        screen: EvaluationChart,
+        navigationOptions: {
+            header: null
+        }
     }
 }
 );
@@ -150,7 +162,9 @@ export default class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <AppContainer />
+                <PersistGate loading={null} persistor={persistor}>
+                    <AppContainer />
+                </PersistGate>
             </Provider>
         )
     }

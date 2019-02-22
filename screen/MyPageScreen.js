@@ -3,13 +3,14 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from "rea
 import { EvilIcons } from '@expo/vector-icons';
 import { ImagePicker, Permissions } from "expo";
 import BasicInfo from "../components/BasicInfo";
+import { connect } from 'react-redux';
 
-export default class MyPageScreen extends React.Component {
+class MyPageScreen extends React.Component {
     static navigationOptions = () => {
         return {
             title: 'My Page',
-            headerStyle: { backgroundColor: "#F5DA81" },
-            headerTitleStyle: { fontSize: 22, color: "white" },
+            headerStyle: { backgroundColor: "#ffdb00" },
+            headerTitleStyle: { fontSize: 15, color: "white" },
         };
     }
     async componentDidMount() {
@@ -25,29 +26,21 @@ export default class MyPageScreen extends React.Component {
 
         if (!result.cancelled) {
             this.setState({ image: result.uri });
-        } else {
             this.props.dispatch({
                 type: 'PROFILE_IMAGE',
-                image: result
+                image: result.uri
             });
         }
     };
-    state = {
-        image: null
-    }
     render() {
-
-        let { image } = this.state;
         return (
             <ScrollView style={styles.container}>
                 <View style={styles.imageBackStyle}>
                     <TouchableOpacity style={styles.imagePickStyle} onPress={this._pickImage}>
-                        {image && (
                             <Image
-                                source={{ uri: image }}
-                                style={{ borderRadius: 30, width: 105, height: 105 }}
+                                source={{ uri: this.props.image }}
+                                style={styles.userPic}
                             />
-                        )}
                         <View style={styles.iconStyle}>
                             <EvilIcons name="pencil" size={20} color='gray' />
                         </View>
@@ -99,12 +92,26 @@ export default class MyPageScreen extends React.Component {
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        image: state.image
+    }
+}
+export default connect(mapStateToProps)(MyPageScreen);
+
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
         backgroundColor: 'white'
+    },
+    userPic:{
+        width: 100,
+        height: 100,
+        borderRadius: 5,
+        borderWidth: StyleSheet.hairlineWidth,
+        borderColor: 'gray'
     },
     imageBackStyle: {
         height: 150,

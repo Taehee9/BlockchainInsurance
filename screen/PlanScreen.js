@@ -9,8 +9,8 @@ export default class PlanScreen extends React.Component {
     static navigationOptions = () => {
         return {
             title: '설계 프로그램',
-            headerStyle: { backgroundColor: "#F5DA81" },
-            headerTitleStyle: { fontSize: 22, color: "white" },
+            headerStyle: { backgroundColor: "#ffdb00" },
+            headerTitleStyle: { fontSize: 15, color: "white" },
         };
     }
     constructor(props) {

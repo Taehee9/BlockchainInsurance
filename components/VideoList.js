@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     imageStyle: {
         width: '40%',
         height: '90%',
+        borderRadius:5,
         borderWidth: StyleSheet.hairlineWidth,
         borderColor: 'black'
     }

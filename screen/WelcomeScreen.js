@@ -7,14 +7,19 @@ import RoundButton from '../components/RoundButton';
 export default class WelcomeScreen extends React.Component {
   render() {
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <Image style={{ width: '40%', height: '30%' }} source={require('../assets/umbrella.jpg')} />
-        <Text style={{ fontSize: 30, color: 'gray', marginBottom: 15 }}>보인다</Text>
-        <TextInputForm style={styles.input} placeholder="Username" name="user" />
-        <TextInputForm style={styles.input} placeholder="Password" name="key" secureTextEntry={true} />
-        <View style={{ flexDirection: 'row' }}>
-          <RoundButton title="회원가입" onPress={() => this.props.navigation.navigate('RegisterUser')} />
-          <RoundButton title="로그인" onPress={() => this.props.navigation.navigate('MainHome')} />
+      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+        <View style={styles.rectangle} />
+        <Image style={{width: 140, height:70, position:'absolute', top:95}} source={require('../assets/icLogoTop.png')} />
+        <Image style={{width: 140, height:70, top:4 }} source={require('../assets/icLogoBottom.png')} />
+        <TextInputForm style={[styles.input, {marginTop:52}]} placeholder="username" name="user" />
+        <TextInputForm style={[styles.input,{ marginTop:13}]} placeholder="password" name="unlock" secureTextEntry={true} />
+        <View >
+          <RoundButton title="Log in" onPress={() => this.props.navigation.navigate('MainHome')} 
+            style={[styles.button, {backgroundColor: "#ffe545", marginTop:45}]}
+            textStyle={{color:'white', fontSize:15}}/>
+          <RoundButton title="Sign Up" onPress={() => this.props.navigation.navigate('RegisterUser')} 
+            style={[styles.button, {borderWidth:1, borderColor: "#be9c00", marginTop:13 }]}
+            textStyle={{color:'#be9c00', fontSize:15}}/>
         </View>
       </KeyboardAvoidingView>
     );
@@ -25,29 +30,29 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent:'flex-start',
+    alignItems:'center'
+  },
+  rectangle:{
+      width: 375,
+      height: 168,
+      backgroundColor: '#ffdb00'
   },
   input: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    width: '80%',
-    height: 40,
-    paddingLeft: 10,
-    borderColor: 'black',
+    width:330,
+    height:40, 
+    borderRadius:5,
     borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 5,
-    backgroundColor: '#fff',
-    color: 'gray',
-    shadowColor: "gray",
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    shadowOffset: {
-      height: 1,
-      width: 0,
-    },
-    marginTop: 5,
-    marginBottom: 5
+    borderColor: 'gray',
+    flexDirection:'row',
+    alignItems:'center',
+    paddingLeft:10,
+  },
+  button:{
+    width: 330,
+    height: 40,
+    borderRadius: 20, 
+    justifyContent:'center', 
+    alignItems:'center'
   }
 });

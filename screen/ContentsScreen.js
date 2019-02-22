@@ -6,8 +6,8 @@ export default class ContentsScreen extends React.Component {
     static navigationOptions = ({ }) => {
         return {
             title: '교육 동영상',
-            headerStyle: { backgroundColor: "#F5DA81" },
-            headerTitleStyle: { fontSize: 20, color: "white" },
+            headerStyle: { backgroundColor: "#ffdb00" },
+            headerTitleStyle: { fontSize: 15, color: "white" },
         };
     }
     constructor(props) {

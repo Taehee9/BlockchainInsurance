@@ -9,9 +9,9 @@ import { MaterialIcons, Ionicons } from '@expo/vector-icons'
 export default class RegisterUserScreen extends React.Component {
     static navigationOptions = ({ }) => {
         return {
-            title: '회원가입',
-            headerStyle: { backgroundColor: "#F5DA81" },
-            headerTitleStyle: { fontSize: 22, color: "white" },
+            title: 'Sign up',
+            headerStyle: { backgroundColor: "#ffdb00" },
+            headerTitleStyle: { fontSize: 15, color: "white" },
         };
     }
     render() {
@@ -37,6 +37,9 @@ export default class RegisterUserScreen extends React.Component {
                 <TextInputForm style={styles.input} placeholder='핸드폰번호를 입력하여주세요' name='phone' />
                 <TextInputForm style={styles.input} placeholder='자주다니는 지역을 입력하여주세요' name='enviromento' />
                 <TextInputForm style={styles.input} placeholder='계좌번호를 입력하여주세요' icon={<MaterialIcons name='account-balance-wallet' color='gray' size={20} />} />
+                <RoundButton title="Register" onPress={() => this.props.navigation.navigate('RegisterUser')} 
+                    style={[styles.button, {borderWidth:1, borderColor: "#be9c00", marginTop:13 }]}
+                    textStyle={{color:'#be9c00', fontSize:15}}/>
             </KeyboardAvoidingView>
         );
     }
@@ -55,25 +58,20 @@ const styles = StyleSheet.create({
         color: 'gray'
     },
     input: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        width: '80%',
-        height: 40,
-        paddingLeft: 10,
-        borderColor: 'black',
+        width:330,
+        height:40, 
+        borderRadius:5,
         borderWidth: StyleSheet.hairlineWidth,
-        borderRadius: 5,
-        backgroundColor: '#fff',
-        color: 'gray',
-        shadowColor: "gray",
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-        shadowOffset: {
-            height: 1,
-            width: 0,
-        },
-        marginTop: 5,
-        marginBottom: 5
+        borderColor: 'gray',
+        flexDirection:'row',
+        alignItems:'center',
+        paddingLeft:10,
+    },
+    button:{
+        width: 330,
+        height: 40,
+        borderRadius: 20, 
+        justifyContent:'center', 
+        alignItems:'center'
     }
 });

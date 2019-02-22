@@ -17,16 +17,16 @@ export default class HomeButton extends React.Component {
 const styles = StyleSheet.create({
   buttonStyle: {
     backgroundColor: "white",
-    height: 60,
+    height: 80,
     width: 187,
     borderColor: "#F2F2F2",
-    borderWidth: 1,
+    borderWidth: 2,
     justifyContent: "center",
     alignItems: "center"
   },
   iconStyle: {
     textAlign: "center",
-    color: "#F7D358",
+    color: "#ffdb00",
     fontSize: 20
   },
   fontStyle: {
