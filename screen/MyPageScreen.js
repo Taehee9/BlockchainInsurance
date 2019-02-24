@@ -4,6 +4,7 @@ import { EvilIcons } from '@expo/vector-icons';
 import { ImagePicker, Permissions } from "expo";
 import BasicInfo from "../components/BasicInfo";
 import { connect } from 'react-redux';
+import EvaluationChart from "../components/EvaluationChart";
 
 class MyPageScreen extends React.Component {
     static navigationOptions = () => {
@@ -15,6 +16,29 @@ class MyPageScreen extends React.Component {
     }
     async componentDidMount() {
         const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    }
+    constructor(props){
+        super(props);
+        this.state={
+            isModalVisible: false,
+            planner: {
+                id: 'planner1',
+                name: '오유나', 
+                startDay: "18.01.04",
+                clientNum: 80,
+                team: 'kalon',
+                averageEstimation: 4,
+                uri: "https://c.pxhere.com/images/87/00/1279d3d870b042d42d56be594ee3-1428661.jpg!d",
+                smartRecommedPoint: 10,
+                comment: "재무설계 가능한 설계사",
+                residentNumber: '900629',
+                sex: 'woman',
+                activeArea: 'seoul',
+                career: 'KB손해보험 2년차',
+                phoneNum: '010-2343-4464',
+                certificateemail:'yoona2343@gmail.com',
+            },
+        }
     }
     _pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -32,6 +56,9 @@ class MyPageScreen extends React.Component {
             });
         }
     };
+    _toggleModal = () =>
+        this.setState({ isModalVisible: !this.state.isModalVisible });
+        
     render() {
         return (
             <ScrollView style={styles.container}>
@@ -51,18 +78,17 @@ class MyPageScreen extends React.Component {
                     <View style={{ padding: 10, paddingLeft: 18, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#D8D8D8', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#D8D8D8' }}>
                         <Text style={{ fontSize: 17 }}>설계사 기본 정보</Text>
                     </View>
-                    <BasicInfo main='사용자 ID' side='th9509' />
-                    <BasicInfo main='이름' side='권태희' />
-                    <BasicInfo main='소속팀 이름' side='KALON' />
-                    <BasicInfo main='나이' side='25' />
+                    <BasicInfo main='이름' side={this.state.planner.name} />
+                    <BasicInfo main='소속팀 이름' side={this.state.planner.team} />
+                    <BasicInfo main='할 말' side={this.state.planner.comment} />
 
                     <View style={{ height: 10 }} />
 
                     <View style={{ padding: 10, paddingLeft: 18, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#D8D8D8', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#D8D8D8' }}>
                         <Text style={{ fontSize: 17 }}>연락처</Text>
                     </View>
-                    <BasicInfo main='연락처' side='010-7231-9969' />
-                    <BasicInfo main='이메일' side='th9509@gmail.com' />
+                    <BasicInfo main='연락처' side={this.state.planner.phoneNum} />
+                    <BasicInfo main='이메일' side={this.state.planner.certificateemail} />
 
                     <View style={{ padding: 10, paddingLeft: 18, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#D8D8D8', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#D8D8D8' }}>
                         <Text style={{ fontSize: 17 }}>설계사 평가 지표</Text>
@@ -70,9 +96,9 @@ class MyPageScreen extends React.Component {
                     <View style={styles.myPageViewStyle}>
                         <Text style={styles.fontStyle}>내 평가 확인하기</Text>
                     </View>
-                    <TouchableOpacity style={styles.buttonStyle} onPress={() => this.props.navigation.navigate('EvaluationChart')} >
-                        <Text style={{ color: "white" }}>조회하기</Text>
-                    </TouchableOpacity>
+                    <EvaluationChart onPress={() => this.setState(this._toggleModal)}
+                            isVisible={this.state.isModalVisible}
+                            onPressToggle={this._toggleModal}/>
 
                     <View style={{ height: 10 }} />
 
@@ -121,11 +147,11 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
     },
     imagePickStyle: {
-        width: 105,
-        height: 105,
+        width: 100,
+        height: 100,
+        borderRadius: 5,
         borderWidth: StyleSheet.hairlineWidth,
         borderColor: 'gray',
-        borderRadius: 30
     },
     iconStyle: {
         backgroundColor: "white",

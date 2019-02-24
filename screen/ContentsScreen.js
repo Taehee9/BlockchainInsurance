@@ -14,14 +14,14 @@ export default class ContentsScreen extends React.Component {
         super(props);
         this.state = {
             data: [
-                { key: 1, title: '교육 동영상 1', description: '간단한 설명들이 들어가있으면 좋을 것 같긴한데.. 진짜 이렇게 구현하려는지는 잘 모르겠습니다..!! 일단 넣어보고 나중에 바꾸는걸루~', uri: 'https://serviceapi.nmv.naver.com/flash/convertIframeTag.nhn?vid=42AD2C27A32536A8812BE4F9E5678B749DE1&outKey=V1271b5dc2079b7d8a8825d241b37b14007b5b0e1cbefc035e4e35d241b37b14007b5&width=544&height=306' },
-                { key: 2, title: '교육 동영상 2', description: '간단한 설명들이 들어가있으면 좋을 것 같긴한데..', uri: 'https://serviceapi.nmv.naver.com/flash/convertIframeTag.nhn?vid=42AD2C27A32536A8812BE4F9E5678B749DE1&outKey=V1271b5dc2079b7d8a8825d241b37b14007b5b0e1cbefc035e4e35d241b37b14007b5&width=544&height=306' },
-                { key: 3, title: '교육 동영상 3', description: '진짜 이렇게 구현하려는지는 잘 모르겠습니다..!!', uri: 'https://serviceapi.nmv.naver.com/flash/convertIframeTag.nhn?vid=A384FD800DDDAD6B9A3A5EA760548C2736AB&outKey=V122a01221f22d3f72cc62daa0d894fdc4a4d648ae59d7dc799812daa0d894fdc4a4d&width=544&height=306' },
-                { key: 4, title: '교육 동영상 4', description: '일단 넣어보고 나중에 바꾸는걸루~', uri: 'https://serviceapi.nmv.naver.com/flash/convertIframeTag.nhn?vid=B67A708176414229A4C255B15CE35ED8F7CC&outKey=V123660808137f6846b285cbb560d9c0886c6997541c456eafd675cbb560d9c0886c6&width=544&height=306' },
-                { key: 5, title: '교육 동영상 5', description: '딴딴해지자 튼튼해지자 똘똘해지자~ 엄마아빠 속썩이지말자~ 사고치지말자~', uri: 'https://serviceapi.nmv.naver.com/flash/convertIframeTag.nhn?vid=920D18A8698F6DB5D31BC1B2FC5A9A0E76FC&outKey=V122b0b801028133107a2021dc9e8493b2099b0d3f4a500f3a513021dc9e8493b2099&width=544&height=306' },
-                { key: 6, title: '교육 동영상 6', description: '딴딴해지자 튼튼해지자 똘똘해지자~ 하루하루~ 그렇게 살다보면 ~ 정말 뭐라도 되지않을까~~', uri: 'https://serviceapi.nmv.naver.com/flash/convertIframeTag.nhn?vid=42AD2C27A32536A8812BE4F9E5678B749DE1&outKey=V1271b5dc2079b7d8a8825d241b37b14007b5b0e1cbefc035e4e35d241b37b14007b5&width=544&height=306' },
-                { key: 7, title: '교육 동영상 7', description: '난 스무살때 옷도사고 머리도 세워보고~ 결국 패션의 완성은 얼굴이엇어~ 그때 느꼇지 안되는건 있구나!!', uri: 'https://serviceapi.nmv.naver.com/flash/convertIframeTag.nhn?vid=A384FD800DDDAD6B9A3A5EA760548C2736AB&outKey=V122a01221f22d3f72cc62daa0d894fdc4a4d648ae59d7dc799812daa0d894fdc4a4d&width=544&height=306' },
-                { key: 8, title: '교육 동영상 8', description: '딴따라하자~ 딩가딩가하자~ 사람들에게 꿈과희망~ 전하고 노래하면~ 정말 뭐라도 되지않을까아아아아', uri: 'https://serviceapi.nmv.naver.com/flash/convertIframeTag.nhn?vid=B67A708176414229A4C255B15CE35ED8F7CC&outKey=V123660808137f6846b285cbb560d9c0886c6997541c456eafd675cbb560d9c0886c6&width=544&height=306' },
+                { key: 1, title: '꼭 알아야할 자동차보험 기초', description: '꼭 알아야만 하는 자동차 보험들을 담았습니다. 기초부분 교육이 필요하신 분들 꼭 들어주세요~', image:require('../assets/1.png'),uri: 'https://youtu.be/TdCMBOE_1Qs' },
+                { key: 2, title: '최대한 많은 내용 담은 자동차 보험', description: '자동차 보험의 모든 것! 최대한 많은 내용을 꽉꽉 담은 교육 영상!!', image:require('../assets/2.png'),uri: 'https://youtu.be/_Csl2X1rxoM' },
+                { key: 3, title: '백지 한장으로 끝내는 보장성보험', description: '한 장이면 모든 내용 다~ 알 수 있는 보장성 보험 교육!', image:require('../assets/3.png'),uri: 'https://youtu.be/x77ypkbSw3c' },
+                { key: 4, title: '보장성보험 - 진단비 준비방법, 갱신형 보험활용 방법', description: '진단비 준비 방법부터 갱신형 보험활용 방법까지 모든 내용을 담은 보장성 보험 교육!',image:require('../assets/4.png'), uri: 'https://youtu.be/eHJhbl4t7VM' },
+                { key: 5, title: '최대한 빨리 끝내는 저축성 보험 상담', description: '시간이 없다! 단기간에 속성 과외식 교육! 저축성 보험 상담입니다!', image:require('../assets/5.png'),uri: 'https://youtu.be/7FTOzahtIxU' },
+                { key: 6, title: '저축성 보험', description: '저축성 보험 교육입니다.', image:require('../assets/6.png'),uri: 'https://youtu.be/0wq_bf_6jm0' },
+                { key: 7, title: '기적의 태아보험 보장 내용', description: '태아보험과 어린이보험의 차이부터 모든 보장내용까지 모든 것을 다 담은 교육입니다.',image:require('../assets/7.png'), uri: 'https://youtu.be/R36CSEhDNQg' },
+                { key: 8, title: '태아보험 알뜰한 설계안', description: '태아보험을 알뜰하게 설계하자! 알뜰한 태아보험 설계안', image:require('../assets/8.png'), uri: 'https://youtu.be/mp5u4kNsqh0' },
             ]
         }
     }
@@ -32,7 +32,7 @@ export default class ContentsScreen extends React.Component {
                     data={this.state.data}
                     renderItem={({ item }) => (
                         <TouchableOpacity onPress={() => { this.props.navigation.navigate('contentDetail', { itemUri: item.uri, itemTitle: item.title, itemDescription: item.description }) }}>
-                            <VideoList title={item.title} description={item.description} uri={item.uri} />
+                            <VideoList title={item.title} description={item.description} uri={item.image} />
                         </TouchableOpacity>
                     )}
                     keyExtractor={(index, item) => index + item}

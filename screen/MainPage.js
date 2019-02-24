@@ -4,6 +4,8 @@ import IconText from '../components/IconText';
 import HomeButton from '../components/HomeButton';
 import CustomerNotice from '../components/CustomerNotice';
 import { connect } from 'react-redux';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 class MainPage extends React.Component {
     static navigationOptions = ({ }) => {
@@ -17,31 +19,56 @@ class MainPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            planner: {
+                id: 'planner1',
+                name: '오유나', 
+                startDay: "18.01.04",
+                clientNum: 80,
+                team: 'kalon',
+                averageEstimation: 4,
+                uri: "https://c.pxhere.com/images/87/00/1279d3d870b042d42d56be594ee3-1428661.jpg!d",
+                smartRecommedPoint: 10,
+                comment: "재무설계 가능한 설계사",
+                residentNumber: '900629',
+                sex: 'woman',
+                activeArea: 'seoul',
+                career: 'KB손해보험 2년차',
+                phoneNum: '010-2343-4464',
+                certificateemail:'yoona2343@gmail.com',
+            },
+
         }
     }
     companyLogo(companyName) {
-        if (companyName == "samsung") {
+        if (companyName == "삼성") {
             return "https://t1.daumcdn.net/news/201706/22/sfdirect/20170622162421882zmiv.jpg";
-        } else if (companyName == "kb") {
+          } else if (companyName == "국민")
             return "https://yt3.ggpht.com/a-/AN66SAxGY8-zefx7A2NaQGRgY0SIm20xE2vr4aIGCg=s900-mo-c-c0xffffffff-rj-k-no";
+          else if (companyName == "메리츠")
+            return "http://image.nsmall.com/itemimg/3/26/963/26451963_S.jpg";
         }
+    componentWillMount(){
+        this.props.dispatch({
+            type: 'PROFILE_IMAGE',
+            image: this.state.planner.uri
+        });
     }
     render() {
         const data = [
-            { key: 'a', name: 'ios-contacts', title: '소속팀', sub: 'KALON' },
-            { key: 'b', name: 'ios-calendar', title: '경력', sub: '3년' },
-            { key: 'c', name: 'ios-thumbs-up', title: '신뢰도', sub: '88%' },
-            { key: 'd', name: 'ios-people', title: '고객수', sub: '7명' },
-            { key: 'e', name: 'ios-pin', title: '주 활동지역', sub: '일산' },
-            { key: 'f', name: 'ios-chatboxes', title: 'comment', sub: '화이팅!' }
+            { key: 'a', name: 'ios-contacts', title: '소속팀', sub: this.state.planner.team },
+            { key: 'b', name: 'ios-calendar', title: '경력', sub: this.state.planner.career },
+            { key: 'c', name: 'ios-thumbs-up', title: '점수', sub: this.state.planner.smartRecommedPoint },
+            { key: 'd', name: 'ios-people', title: '고객수', sub: this.state.planner.clientNum },
+            { key: 'e', name: 'ios-pin', title: '주 활동지역', sub: this.state.planner.activeArea },
+            { key: 'f', name:'ios-cash', title: '포인트', sub:this.state.planner.averageEstimation}
         ]
         const notice= [
-            {key:'a', logo:this.companyLogo('kb'), name:'김유준', sub: '보험금 청구가 접수되었습니다.'},
-            {key:'b', logo:this.companyLogo('kb'), name:'임은정', sub: '보험금 해지 문의하셨습니다.'},
-            {key:'c', logo:this.companyLogo('samsung'), name:'김정수', sub: '보험금 처리가 종결되었습니다.' },
-            {key:'d', logo:this.companyLogo('kb'), name:'권태희', sub: '보험금 처리가 종결되었습니다.'},
-            {key:'e', logo:this.companyLogo('samsung'), name:'권카롱', sub: '보험금 해지 문의하셨습니다.'},
-            {key:'f', logo:this.companyLogo('samsung'), name:'권태희', sub: '보험금 청구가 접수되었습니다.'},
+            {key:'a', logo:this.companyLogo('국민'), name:'안민호', sub: '보험금 청구가 접수되었습니다.'},
+            {key:'b', logo:this.companyLogo('메리츠'), name:'박대우', sub: '보험금 해지 문의하셨습니다.'},
+            {key:'c', logo:this.companyLogo('국민'), name:'최유리', sub: '보험금 처리가 종결되었습니다.' },
+            {key:'d', logo:this.companyLogo('삼성'), name:'박진형', sub: '보험금 처리가 종결되었습니다.'},
+            {key:'e', logo:this.companyLogo('삼성'), name:'김준원', sub: '보험금 해지 문의하셨습니다.'},
+            {key:'f', logo:this.companyLogo('국민'), name:'김민정', sub: '보험금 청구가 접수되었습니다.'},
         ]
         const items = data.map((item) => {
             return (
@@ -58,12 +85,18 @@ class MainPage extends React.Component {
                         <Image style={styles.userPic}
                             source={{ uri: this.props.image || '' }} />
                         <View style={{ marginTop: 10, marginBottom: 15 }}>
-                            <Text style={{ fontSize: 20, color: '#be9c00', fontWeight: "300" }}>카롱이</Text>
+                            <Text style={{ fontSize: 20, color: '#be9c00', fontWeight: "300" }}>{this.state.planner.name}</Text>
                         </View>
                         <View style={{ width: '100%', marginTop: 5 }}>
                             <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                                 <View style={styles.line} />
                                 {items}
+                            </View>
+                            <View style={{height:5}} />
+                            <View style={{paddingLeft:20, flexDirection:'row'}}>
+                                <Ionicons name='ios-chatboxes' color='#a4a4a4' size={20} />
+                                <View style={{width:2}} />
+                                <Text style={{color:'#A4A4A4', fontSize:15}}>할 말   {this.state.planner.comment}</Text>
                             </View>
                         </View>
                     </View>

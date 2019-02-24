@@ -30,7 +30,8 @@ export default class ContentDetailScreen extends React.Component {
                     isPortrait={true}
                     playFromPositionMillis={0}
                 />
-                <View style={{ padding: 10 }}>
+
+                <View style={{ padding: 20 }}>
                     <View style={{ height: 10 }} />
                     <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{itemTitle}</Text>
                     <View style={{ height: 10 }} />

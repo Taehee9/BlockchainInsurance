@@ -15,7 +15,6 @@ import MyPageScreen from './screen/MyPageScreen';
 import CalendarScreen from './screen/CalendarScreen';
 import ContentsScreen from './screen/ContentsScreen';
 import ContentDetailScreen from './screen/ContentDetailScreen';
-import EvaluationChartScreen from './screen/EvaluationChartScreen';
 
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
@@ -129,16 +128,9 @@ const RegisterUser = createStackNavigator({
     }
 })
 
-const EvaluationChart = createStackNavigator({
-    EvaluationChart:{
-        screen:EvaluationChartScreen
-    }
-})
-
 const AppNavigator = createStackNavigator({
     Welcome: {
         screen:WelcomeScreen,
-        //screen: TodoListScreen,
         navigationOptions: {
             header: null
         }
@@ -159,12 +151,6 @@ const AppNavigator = createStackNavigator({
         screen:TodoList,
         navigationOptions:{
             header : null
-        }
-    },
-    EvaluationChart: {
-        screen: EvaluationChart,
-        navigationOptions: {
-            header: null
         }
     }
 }
