@@ -18,7 +18,7 @@ export default class PlanScreen extends React.Component {
         super(props);
         this.state = {
             companyList: undefined,
-            isRefreshing: false
+            isRefreshing: false,
         }
     }
     _toggleModal = () =>
@@ -107,8 +107,7 @@ export default class PlanScreen extends React.Component {
             color: '#9EA0A4',
         };
         return (
-            <ScrollView style={styles.container}>
-                <View style={{justifyContent:'center', alignItems:'center'}} >
+            <View style={styles.container}>
                     <View style={styles.titleStyle}>
                         <Text style={{ color: 'white' }}>고객정보</Text>
                     </View>
@@ -302,7 +301,6 @@ export default class PlanScreen extends React.Component {
                         </View>
                     </View>
                 </View>
-            </ScrollView>
         );
     }
 }
@@ -311,7 +309,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        justifyContent:'center',
+        alignItems:'center'
     },
     titleStyle: {
         width: 70,
