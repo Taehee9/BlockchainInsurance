@@ -134,7 +134,7 @@ export default class DetailCustomerScreen extends React.Component {
         return myClient;
     }
     clientSex(data){
-        if(data.sex=='man'){
+        if(data=='man'){
             return '남'
         }
         else{
