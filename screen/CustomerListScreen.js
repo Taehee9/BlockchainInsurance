@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import TextInputForm from '../components/TextInputForm';
 import CustomerList from '../components/CustomerList'
 import { connect } from 'react-redux';
+import { NavigationEvents } from 'react-navigation';
 
 class CustomerListScreen extends React.Component {
     key = ''
@@ -259,6 +260,34 @@ class CustomerListScreen extends React.Component {
             ]
         }
     }
+    fetchHyperledgerData() {
+        return fetch(
+          `http://${this.props.hyperServer}:8080/api/query/queryAllPlanners`
+        )
+          .then(response => response.json())
+          .catch(error => {
+            console.error(error);
+          });
+      }
+      fetchHyperledgerInsuranceDatass() {
+        return fetch(
+          `http://${this.props.hyperServer}:8080/api/queryss/queryAllContractedInsurance`
+        )
+          .then(response => response.json())
+          .catch(error => {
+            console.error(error);
+          });
+      }
+    
+    fetchHyperledgerClientData() {
+        return fetch(
+          `http://${this.props.hyperServer}:8080/api/query/queryAllClients`
+        )
+          .then(response => response.json())
+          .catch(error => {
+            console.error(error);
+          });
+      }
     myClientCheck(client, insurance){
         myClient=[];
         m=0, k=0, p=0;
@@ -302,6 +331,32 @@ class CustomerListScreen extends React.Component {
         console.log(this.props.UserInsuranceInfo)
         return (
             <View style={styles.container}>
+            <NavigationEvents
+                        onWillFocus={async() => {
+                                await this.fetchHyperledgerData().then(items => {
+                                  this.props.dispatch({
+                                    type: "ADD_PlannerInfo",
+                                    PlannerInfo: JSON.parse(items.response),
+                                  })
+                                }  
+                              )
+                              await this.fetchHyperledgerInsuranceDatass().then(items => {
+                                this.props.dispatch({
+                                  type: "ADD_UserInsuranceInfo",
+                                  UserInsuranceInfo: JSON.parse(items.response),
+                                })
+                              }  
+                            )
+                            await this.fetchHyperledgerClientData().then(items => {
+                                this.props.dispatch({
+                                  type: "ADD_ClientInfo",
+                                  ClientInfo: JSON.parse(items.response),
+                                })
+                              }  
+                            )
+                        }} /> 
+                        {
+            <View>
                 <View style={{ flexDirection: 'row', backgroundColor: 'white', width: '100%', height: 50, alignItems: 'center', paddingLeft: 10 }}>
                     <Text style={{ fontSize: 20, color: 'gray' }}>고객리스트</Text>
                     <View style={{ width: 10 }} />
@@ -344,6 +399,8 @@ class CustomerListScreen extends React.Component {
                         }, 2000);
                     }}
                 />
+                </View>
+                }
             </View>
         )
     }

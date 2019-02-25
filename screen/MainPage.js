@@ -5,6 +5,7 @@ import HomeButton from '../components/HomeButton';
 import CustomerNotice from '../components/CustomerNotice';
 import { connect } from 'react-redux';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { NavigationEvents } from 'react-navigation';
 
 class MainPage extends React.Component {
     static navigationOptions = ({ }) => {
@@ -133,7 +134,31 @@ class MainPage extends React.Component {
         })
         return (
             <View style={styles.container}>
-                <View style={{ alignItems: 'center' }}>
+                <NavigationEvents
+                        onWillFocus={async() => {
+                                await this.fetchHyperledgerData().then(items => {
+                                  this.props.dispatch({
+                                    type: "ADD_PlannerInfo",
+                                    PlannerInfo: JSON.parse(items.response),
+                                  })
+                                }  
+                              )
+                              await this.fetchHyperledgerInsuranceDatass().then(items => {
+                                this.props.dispatch({
+                                  type: "ADD_UserInsuranceInfo",
+                                  UserInsuranceInfo: JSON.parse(items.response),
+                                })
+                              }  
+                            )
+                            await this.fetchHyperledgerClientData().then(items => {
+                                this.props.dispatch({
+                                  type: "ADD_ClientInfo",
+                                  ClientInfo: JSON.parse(items.response),
+                                })
+                              }  
+                            )
+                        }} />   
+                {<View style={{ alignItems: 'center' }}>
                     <View style={styles.userInfo}>
                         <Image style={styles.userPic}
                             source={{ uri: this.props.image || '' }} />
@@ -171,7 +196,7 @@ class MainPage extends React.Component {
                         />
                     </View>
 
-                </View>
+                </View>}
             </View>
         );
     }
