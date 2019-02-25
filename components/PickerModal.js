@@ -9,17 +9,13 @@ export default class PickerModal extends React.Component {
             text:'선택',
         }
     }
-    pick(data){
-        this.setState({text:data})
-        this.props.onPressToggle
-    }
     render() {
         const items = this.props.name.map((item) => {
             return (
                 <TouchableOpacity 
                     style={{padding:10}}
-                    onPress={this.pick}>
-                    <Text style={{fontSize:20, color: 'gray'}}>{item.label}</Text>
+                    onPress={this.props.onPressToggle}>
+                    <Text style={{fontSize:20, color: 'gray'}} onPress={this.setState({text:item.label})}>{item.label}</Text>
                     <View style={{height:7}} />
                 </TouchableOpacity>
             );

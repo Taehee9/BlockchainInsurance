@@ -4,8 +4,9 @@ import TextIcon from '../components/TextIcon';
 import { Ionicons } from '@expo/vector-icons';
 import TextInputForm from '../components/TextInputForm';
 import CustomerList from '../components/CustomerList'
+import { connect } from 'react-redux';
 
-export default class CustomerListScreen extends React.Component {
+class CustomerListScreen extends React.Component {
     key = ''
     static navigationOptions = ({ navigation }) => {
         return {
@@ -20,7 +21,7 @@ export default class CustomerListScreen extends React.Component {
             isRefreshing: false,
             myClientData:[],
             clientNum:0,
-            clientData: [
+            ClientInfo: [
                 {
                     id: 'user1',
                     name: '이명우',
@@ -154,7 +155,7 @@ export default class CustomerListScreen extends React.Component {
                     residentNumber: '900517-1239851',     
                 },
             ],
-            insuranceData:[
+            UserInsuranceInfo:[
                 {
                     UserInsuranceID: 1,
                     insuranceId: 1111,
@@ -295,45 +296,16 @@ export default class CustomerListScreen extends React.Component {
         }
         return price;
     }
-    fetchHyperledgerInsuranceData() {
-        return fetch(
-            `http://192.168.0.9:8080/api/query/queryAllContractedInsurance`
-        )
-            .then(response => response.json())
-            .catch(error => {
-                console.error(error);
-            });
-    }
-    fetchHyperledgerClientData() {
-        return fetch(
-            `http://192.168.0.9:8080/api/query/queryAllClients`
-        )
-            .then(response => response.json())
-            .catch(error => {
-                console.error(error);
-            });
-    }
-    //insuranceData도 집어넣어야할듯
-    componentDidMount() {
-        // this.myClientCheck(this.state.clientData, this.state.insuranceData);
-        this.fetchHyperledgerClientData().then(items => {
-            this.setState({
-                clientData: JSON.parse(items.response),
-                clientNum : (JSON.parse(item.response)).length
-            })
-        });
-    }
-    // componentWillMount(){
-    //     this.myClientCheck(this.state.clientData, this.state.insuranceData);
-    // }
+    
     render() {
-        let clientDataMap = this.state.clientData.map(item => item.Record)
+        console.log(this.props.ClientInfo)
+        console.log(this.props.UserInsuranceInfo)
         return (
             <View style={styles.container}>
                 <View style={{ flexDirection: 'row', backgroundColor: 'white', width: '100%', height: 50, alignItems: 'center', paddingLeft: 10 }}>
                     <Text style={{ fontSize: 20, color: 'gray' }}>고객리스트</Text>
                     <View style={{ width: 10 }} />
-                    <Text style={{ fontSize: 15, color: 'gray' }}>총 {this.myClientCheck(this.state.clientData, this.state.insuranceData).length}명</Text>
+                    <Text style={{ fontSize: 15, color: 'gray' }}>총 {this.myClientCheck(this.state.ClientInfo, this.state.UserInsuranceInfo).length}명</Text>
                     <View style={{ width: 155 }} />
 
                 </View>
@@ -350,7 +322,7 @@ export default class CustomerListScreen extends React.Component {
                 <View style={{ width: '100%', height: StyleSheet.hairlineWidth, backgroundColor: '#D8D8D8' }} />
                 <FlatList
                     style={{ paddingLeft: 2, backgroundColor: 'white' }}
-                    data={this.myClientCheck(this.state.clientData, this.state.insuranceData)}
+                    data={this.myClientCheck(this.props.ClientInfo, this.props.UserInsuranceInfo)}
                     renderItem={({ item }) => (
                         <TouchableOpacity
                             onPress={() => { this.props.navigation.navigate('DetailCustomer', { itemId: item }) }}
@@ -377,6 +349,14 @@ export default class CustomerListScreen extends React.Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        UserInsuranceInfo:state.UserInsuranceInfo,
+        ClientInfo:state.ClientInfo,
+        hyperServer : state.hyperServer,
+    }
+}
+export default connect(mapStateToProps)(CustomerListScreen);
 
 const styles = StyleSheet.create({
     container: {

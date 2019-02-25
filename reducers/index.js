@@ -1,7 +1,5 @@
-//state 뒤에 있는 부분이 초기값 집어넣는 부분. 
-const reducer = (state = { image: ' ' }, action) => {
-    //console.warn("Changes are not persisted to disk");
-    //setState는 바뀐 값들만 덮어쓰는 거라면 reducer는 전체 값이 덮어씌워짐!
+const reducer = (state = { image: ' ', PlannerInfo:[], UserInsuranceInfo:[], ClientInfo:[],hyperServer : "192.168.0.9", }, action) => {
+
     switch (action.type) {
         case 'PROFILE_IMAGE':
             return {
@@ -11,6 +9,16 @@ const reducer = (state = { image: ' ' }, action) => {
             return {
                 ...state,
                 PlannerInfo: action.PlannerInfo.map(item => item.Record)
+            };
+        case "ADD_UserInsuranceInfo":
+            return {
+              ...state,
+              UserInsuranceInfo: state.UserInsuranceInfo.concat(action.UserInsuranceInfo.map(item => item.Record))
+            };
+        case "ADD_ClientInfo":
+            return {
+                ...state,
+                ClientInfo: action.ClientInfo.map(item => item.Record)
             };
     }
     return state;

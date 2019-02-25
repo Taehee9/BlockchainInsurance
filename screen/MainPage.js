@@ -4,7 +4,6 @@ import IconText from '../components/IconText';
 import HomeButton from '../components/HomeButton';
 import CustomerNotice from '../components/CustomerNotice';
 import { connect } from 'react-redux';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 class MainPage extends React.Component {
@@ -19,13 +18,13 @@ class MainPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            planner: {
+            PlannerInfo: {
                 id: 'planner1',
                 name: '오유나', 
                 startDay: "18.01.04",
                 clientNum: 80,
                 team: 'kalon',
-                averageEstimation: 4,
+                coin: 234,
                 uri: "https://c.pxhere.com/images/87/00/1279d3d870b042d42d56be594ee3-1428661.jpg!d",
                 smartRecommedPoint: 10,
                 comment: "재무설계 가능한 설계사",
@@ -50,17 +49,71 @@ class MainPage extends React.Component {
     componentWillMount(){
         this.props.dispatch({
             type: 'PROFILE_IMAGE',
-            image: this.state.planner.uri
+            image: this.state.PlannerInfo.uri
         });
     }
+    componentDidMount = async () => {
+        await this.fetchHyperledgerData().then(items => {
+          this.props.dispatch({
+            type: "ADD_PlannerInfo",
+            PlannerInfo: JSON.parse(items.response),
+          })
+        }  
+      )
+      await this.fetchHyperledgerInsuranceDatass().then(items => {
+        this.props.dispatch({
+          type: "ADD_UserInsuranceInfo",
+          UserInsuranceInfo: JSON.parse(items.response),
+        })
+      }  
+    )
+    await this.fetchHyperledgerClientData().then(items => {
+        this.props.dispatch({
+          type: "ADD_ClientInfo",
+          ClientInfo: JSON.parse(items.response),
+        })
+      }  
+    )
+    }
+    fetchHyperledgerData() {
+        return fetch(
+          `http://${this.props.hyperServer}:8080/api/query/queryAllPlanners`
+        )
+          .then(response => response.json())
+          .catch(error => {
+            console.error(error);
+          });
+      }
+      fetchHyperledgerInsuranceDatass() {
+        return fetch(
+          `http://${this.props.hyperServer}:8080/api/queryss/queryAllContractedInsurance`
+        )
+          .then(response => response.json())
+          .catch(error => {
+            console.error(error);
+          });
+      }
+    
+    fetchHyperledgerClientData() {
+        return fetch(
+          `http://${this.props.hyperServer}:8080/api/query/queryAllClients`
+        )
+          .then(response => response.json())
+          .catch(error => {
+            console.error(error);
+          });
+      }
     render() {
+        console.log(this.props.PlannerInfo[0].name);
+        console.log(this.props.ClientInfo);
+        console.log(this.props.UserInsuranceInfo);
         const data = [
-            { key: 'a', name: 'ios-contacts', title: '소속팀', sub: this.state.planner.team },
-            { key: 'b', name: 'ios-calendar', title: '경력', sub: this.state.planner.career },
-            { key: 'c', name: 'ios-thumbs-up', title: '점수', sub: this.state.planner.smartRecommedPoint },
-            { key: 'd', name: 'ios-people', title: '고객수', sub: this.state.planner.clientNum },
-            { key: 'e', name: 'ios-pin', title: '주 활동지역', sub: this.state.planner.activeArea },
-            { key: 'f', name:'ios-cash', title: '포인트', sub:this.state.planner.averageEstimation}
+            { key: 'a', name: 'ios-contacts', title: '소속팀', sub: this.state.PlannerInfo.team },
+            { key: 'b', name: 'ios-calendar', title: '경력', sub: this.state.PlannerInfo.career },
+            { key: 'c', name: 'ios-thumbs-up', title: '점수', sub: this.state.PlannerInfo.smartRecommedPoint },
+            { key: 'd', name: 'ios-people', title: '고객수', sub: this.state.PlannerInfo.clientNum +' 명' },
+            { key: 'e', name: 'ios-pin', title: '주 활동지역', sub: this.state.PlannerInfo.activeArea },
+            { key: 'f', name:'ios-cash', title: '포인트', sub:this.state.PlannerInfo.coin +' BoC'}
         ]
         const notice= [
             {key:'a', logo:this.companyLogo('국민'), name:'안민호', sub: '보험금 청구가 접수되었습니다.'},
@@ -85,7 +138,7 @@ class MainPage extends React.Component {
                         <Image style={styles.userPic}
                             source={{ uri: this.props.image || '' }} />
                         <View style={{ marginTop: 10, marginBottom: 15 }}>
-                            <Text style={{ fontSize: 20, color: '#be9c00', fontWeight: "300" }}>{this.state.planner.name}</Text>
+                            <Text style={{ fontSize: 20, color: '#be9c00', fontWeight: "300" }}>{this.state.PlannerInfo.name}</Text>
                         </View>
                         <View style={{ width: '100%', marginTop: 5 }}>
                             <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
@@ -96,7 +149,7 @@ class MainPage extends React.Component {
                             <View style={{paddingLeft:20, flexDirection:'row'}}>
                                 <Ionicons name='ios-chatboxes' color='#a4a4a4' size={20} />
                                 <View style={{width:2}} />
-                                <Text style={{color:'#A4A4A4', fontSize:15}}>할 말   {this.state.planner.comment}</Text>
+                                <Text style={{color:'#A4A4A4', fontSize:15}}>할 말   {this.state.PlannerInfo.comment}</Text>
                             </View>
                         </View>
                     </View>
@@ -125,7 +178,11 @@ class MainPage extends React.Component {
 }
 const mapStateToProps = (state) => {
     return {
-        image: state.image
+        image: state.image,
+        PlannerInfo:state.PlannerInfo,
+        hyperServer : state.hyperServer,
+        UserInsuranceInfo:state.UserInsuranceInfo,
+        ClientInfo:state.ClientInfo,
     }
 }
 export default connect(mapStateToProps)(MainPage);

@@ -78,17 +78,17 @@ class MyPageScreen extends React.Component {
                     <View style={{ padding: 10, paddingLeft: 18, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#D8D8D8', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#D8D8D8' }}>
                         <Text style={{ fontSize: 17 }}>설계사 기본 정보</Text>
                     </View>
-                    <BasicInfo main='이름' side={this.state.planner.name} />
-                    <BasicInfo main='소속팀 이름' side={this.state.planner.team} />
-                    <BasicInfo main='할 말' side={this.state.planner.comment} />
+                    <BasicInfo main='이름' side={this.props.PlannerInfo.name} />
+                    <BasicInfo main='소속팀 이름' side={this.props.PlannerInfo.team} />
+                    <BasicInfo main='할 말' side={this.props.PlannerInfo.comment} />
 
                     <View style={{ height: 10 }} />
 
                     <View style={{ padding: 10, paddingLeft: 18, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#D8D8D8', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#D8D8D8' }}>
                         <Text style={{ fontSize: 17 }}>연락처</Text>
                     </View>
-                    <BasicInfo main='연락처' side={this.state.planner.phoneNum} />
-                    <BasicInfo main='이메일' side={this.state.planner.certificateemail} />
+                    <BasicInfo main='연락처' side={this.props.PlannerInfo.phoneNum} />
+                    <BasicInfo main='이메일' side={this.props.PlannerInfo.certificateemail} />
 
                     <View style={{ padding: 10, paddingLeft: 18, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#D8D8D8', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#D8D8D8' }}>
                         <Text style={{ fontSize: 17 }}>설계사 평가 지표</Text>
@@ -120,7 +120,8 @@ class MyPageScreen extends React.Component {
 }
 const mapStateToProps = (state) => {
     return {
-        image: state.image
+        image: state.image,
+        PlannerInfo:state.PlannerInfo
     }
 }
 export default connect(mapStateToProps)(MyPageScreen);
