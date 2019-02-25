@@ -21,13 +21,14 @@ class MyPageScreen extends React.Component {
         super(props);
         this.state={
             isModalVisible: false,
-            planner: {
+            PlannerInfo: {
                 id: 'planner1',
                 name: '오유나', 
                 startDay: "18.01.04",
                 clientNum: 80,
                 team: 'kalon',
                 averageEstimation: 4,
+                coin:234,
                 uri: "https://c.pxhere.com/images/87/00/1279d3d870b042d42d56be594ee3-1428661.jpg!d",
                 smartRecommedPoint: 10,
                 comment: "재무설계 가능한 설계사",
@@ -78,17 +79,17 @@ class MyPageScreen extends React.Component {
                     <View style={{ padding: 10, paddingLeft: 18, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#D8D8D8', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#D8D8D8' }}>
                         <Text style={{ fontSize: 17 }}>설계사 기본 정보</Text>
                     </View>
-                    <BasicInfo main='이름' side={this.props.PlannerInfo.name} />
-                    <BasicInfo main='소속팀 이름' side={this.props.PlannerInfo.team} />
-                    <BasicInfo main='할 말' side={this.props.PlannerInfo.comment} />
+                    <BasicInfo main='이름' side={this.state.PlannerInfo.name} />
+                    <BasicInfo main='소속팀 이름' side={this.state.PlannerInfo.team} />
+                    <BasicInfo main='할 말' side={this.state.PlannerInfo.comment} />
 
                     <View style={{ height: 10 }} />
 
                     <View style={{ padding: 10, paddingLeft: 18, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#D8D8D8', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#D8D8D8' }}>
                         <Text style={{ fontSize: 17 }}>연락처</Text>
                     </View>
-                    <BasicInfo main='연락처' side={this.props.PlannerInfo.phoneNum} />
-                    <BasicInfo main='이메일' side={this.props.PlannerInfo.certificateemail} />
+                    <BasicInfo main='연락처' side={this.state.PlannerInfo.phoneNum} />
+                    <BasicInfo main='이메일' side={this.state.PlannerInfo.certificateemail} />
 
                     <View style={{ padding: 10, paddingLeft: 18, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#D8D8D8', borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#D8D8D8' }}>
                         <Text style={{ fontSize: 17 }}>설계사 평가 지표</Text>

@@ -1,8 +1,9 @@
-const reducer = (state = { image: ' ', PlannerInfo:[], UserInsuranceInfo:[], ClientInfo:[],hyperServer : "192.168.56.1", }, action) => {
+const reducer = (state = { image: ' ', PlannerInfo:[], UserInsuranceInfo:[], ClientInfo:[], hyperServer : "192.168.56.1", }, action) => {
 
     switch (action.type) {
         case 'PROFILE_IMAGE':
             return {
+                ...state,
                 image: action.image
             }
         case "ADD_PlannerInfo":

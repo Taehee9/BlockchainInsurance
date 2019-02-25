@@ -5,7 +5,6 @@ import HomeButton from '../components/HomeButton';
 import CustomerNotice from '../components/CustomerNotice';
 import { connect } from 'react-redux';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { NavigationEvents } from 'react-navigation';
 
 class MainPage extends React.Component {
     static navigationOptions = ({ }) => {
@@ -25,7 +24,8 @@ class MainPage extends React.Component {
                 startDay: "18.01.04",
                 clientNum: 80,
                 team: 'kalon',
-                coin: 234,
+                averageEstimation: 4,
+                coin:234,
                 uri: "https://c.pxhere.com/images/87/00/1279d3d870b042d42d56be594ee3-1428661.jpg!d",
                 smartRecommedPoint: 10,
                 comment: "재무설계 가능한 설계사",
@@ -47,67 +47,7 @@ class MainPage extends React.Component {
           else if (companyName == "메리츠")
             return "http://image.nsmall.com/itemimg/3/26/963/26451963_S.jpg";
         }
-    componentWillMount(){
-        this.props.dispatch({
-            type: 'PROFILE_IMAGE',
-            image: this.state.PlannerInfo.uri
-        });
-    }
-    componentDidMount = async () => {
-        await this.fetchHyperledgerData().then(items => {
-          this.props.dispatch({
-            type: "ADD_PlannerInfo",
-            PlannerInfo: JSON.parse(items.response),
-          })
-        }  
-      )
-      await this.fetchHyperledgerInsuranceDatass().then(items => {
-        this.props.dispatch({
-          type: "ADD_UserInsuranceInfo",
-          UserInsuranceInfo: JSON.parse(items.response),
-        })
-      }  
-    )
-    await this.fetchHyperledgerClientData().then(items => {
-        this.props.dispatch({
-          type: "ADD_ClientInfo",
-          ClientInfo: JSON.parse(items.response),
-        })
-      }  
-    )
-    }
-    fetchHyperledgerData() {
-        return fetch(
-          `http://${this.props.hyperServer}:8080/api/query/queryAllPlanners`
-        )
-          .then(response => response.json())
-          .catch(error => {
-            console.error(error);
-          });
-      }
-      fetchHyperledgerInsuranceDatass() {
-        return fetch(
-          `http://${this.props.hyperServer}:8080/api/queryss/queryAllContractedInsurance`
-        )
-          .then(response => response.json())
-          .catch(error => {
-            console.error(error);
-          });
-      }
-    
-    fetchHyperledgerClientData() {
-        return fetch(
-          `http://${this.props.hyperServer}:8080/api/query/queryAllClients`
-        )
-          .then(response => response.json())
-          .catch(error => {
-            console.error(error);
-          });
-      }
     render() {
-        console.log(this.props.PlannerInfo[0].name);
-        console.log(this.props.ClientInfo);
-        console.log(this.props.UserInsuranceInfo);
         const data = [
             { key: 'a', name: 'ios-contacts', title: '소속팀', sub: this.state.PlannerInfo.team },
             { key: 'b', name: 'ios-calendar', title: '경력', sub: this.state.PlannerInfo.career },
@@ -134,31 +74,7 @@ class MainPage extends React.Component {
         })
         return (
             <View style={styles.container}>
-                <NavigationEvents
-                        onWillFocus={async() => {
-                                await this.fetchHyperledgerData().then(items => {
-                                  this.props.dispatch({
-                                    type: "ADD_PlannerInfo",
-                                    PlannerInfo: JSON.parse(items.response),
-                                  })
-                                }  
-                              )
-                              await this.fetchHyperledgerInsuranceDatass().then(items => {
-                                this.props.dispatch({
-                                  type: "ADD_UserInsuranceInfo",
-                                  UserInsuranceInfo: JSON.parse(items.response),
-                                })
-                              }  
-                            )
-                            await this.fetchHyperledgerClientData().then(items => {
-                                this.props.dispatch({
-                                  type: "ADD_ClientInfo",
-                                  ClientInfo: JSON.parse(items.response),
-                                })
-                              }  
-                            )
-                        }} />   
-                {<View style={{ alignItems: 'center' }}>
+                <View style={{ alignItems: 'center' }}>
                     <View style={styles.userInfo}>
                         <Image style={styles.userPic}
                             source={{ uri: this.props.image || '' }} />
@@ -196,7 +112,7 @@ class MainPage extends React.Component {
                         />
                     </View>
 
-                </View>}
+                </View>
             </View>
         );
     }

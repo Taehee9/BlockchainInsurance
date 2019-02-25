@@ -5,7 +5,6 @@ import { Ionicons } from '@expo/vector-icons';
 import TextInputForm from '../components/TextInputForm';
 import CustomerList from '../components/CustomerList'
 import { connect } from 'react-redux';
-import { NavigationEvents } from 'react-navigation';
 
 class CustomerListScreen extends React.Component {
     key = ''
@@ -22,6 +21,7 @@ class CustomerListScreen extends React.Component {
             isRefreshing: false,
             myClientData:[],
             clientNum:0,
+            // client: null,
             ClientInfo: [
                 {
                     id: 'user1',
@@ -260,55 +260,53 @@ class CustomerListScreen extends React.Component {
             ]
         }
     }
-    fetchHyperledgerData() {
+
+
+    fetchHyperledgerQueryAllClinets() {
         return fetch(
-          `http://${this.props.hyperServer}:8080/api/query/queryAllPlanners`
+          `http://192.168.56.1:8080/api/query/queryAllClients`
         )
           .then(response => response.json())
           .catch(error => {
             console.error(error);
           });
       }
-      fetchHyperledgerInsuranceDatass() {
-        return fetch(
-          `http://${this.props.hyperServer}:8080/api/queryss/queryAllContractedInsurance`
-        )
-          .then(response => response.json())
-          .catch(error => {
-            console.error(error);
-          });
+
+      componentDidMount = async () => {
+        await this.fetchHyperledgerQueryAllClinets().then(items => {
+          this.setState({
+            client : JSON.parse(items.response),
+          })    
+        })
+      
+        await this.setState({
+            clientInfo : this.state.client.map((item => item.Record)),
+          })    
+        
+        console.log("client info :" + this.state.clientInfo)
       }
-    
-    fetchHyperledgerClientData() {
-        return fetch(
-          `http://${this.props.hyperServer}:8080/api/query/queryAllClients`
-        )
-          .then(response => response.json())
-          .catch(error => {
-            console.error(error);
-          });
-      }
-    myClientCheck(client, insurance){
-        myClient=[];
-        m=0, k=0, p=0;
-        for(let i=0; i<client.length; i++){
-            for(let j=0; j<insurance.length; j++){
-                if(client[i].name == insurance[j].insured){
-                    if(m==0){
-                        myClient[m]=client[i];
-                        m++;
-                    }
-                    else{
-                        if(myClient[m-1].id != client[i].id){
-                            myClient[m]= client[i];
-                            m++;
-                        }
-                    }
-                }
-            }
-        }
-        return myClient;
-    }
+
+    // myClientCheck(client, insurance){
+    //     myClient=[];
+    //     m=0, k=0, p=0;
+    //     for(let i=0; i< client.length; i++){
+    //         for(let j=0; j<insurance.length; j++){
+    //             if(client[i].name == insurance[j].insured){
+    //                 if(m==0){
+    //                     myClient[m]=client[i];
+    //                     m++;
+    //                 }
+    //                 else{
+    //                     if(myClient[m-1].id != client[i].id){
+    //                         myClient[m]= client[i];
+    //                         m++;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return myClient;
+    // }
     clientSex(data){
         if(data.sex=='man'){
             return '남'
@@ -331,36 +329,10 @@ class CustomerListScreen extends React.Component {
         console.log(this.props.UserInsuranceInfo)
         return (
             <View style={styles.container}>
-            <NavigationEvents
-                        onWillFocus={async() => {
-                                await this.fetchHyperledgerData().then(items => {
-                                  this.props.dispatch({
-                                    type: "ADD_PlannerInfo",
-                                    PlannerInfo: JSON.parse(items.response),
-                                  })
-                                }  
-                              )
-                              await this.fetchHyperledgerInsuranceDatass().then(items => {
-                                this.props.dispatch({
-                                  type: "ADD_UserInsuranceInfo",
-                                  UserInsuranceInfo: JSON.parse(items.response),
-                                })
-                              }  
-                            )
-                            await this.fetchHyperledgerClientData().then(items => {
-                                this.props.dispatch({
-                                  type: "ADD_ClientInfo",
-                                  ClientInfo: JSON.parse(items.response),
-                                })
-                              }  
-                            )
-                        }} /> 
-                        {
-            <View>
                 <View style={{ flexDirection: 'row', backgroundColor: 'white', width: '100%', height: 50, alignItems: 'center', paddingLeft: 10 }}>
                     <Text style={{ fontSize: 20, color: 'gray' }}>고객리스트</Text>
                     <View style={{ width: 10 }} />
-                    <Text style={{ fontSize: 15, color: 'gray' }}>총 {this.myClientCheck(this.state.ClientInfo, this.state.UserInsuranceInfo).length}명</Text>
+                    {/* <Text style={{ fontSize: 15, color: 'gray' }}>총 {this.myClientCheck(this.state.ClientInfo, this.state.UserInsuranceInfo).length}명</Text> */}
                     <View style={{ width: 155 }} />
 
                 </View>
@@ -377,7 +349,9 @@ class CustomerListScreen extends React.Component {
                 <View style={{ width: '100%', height: StyleSheet.hairlineWidth, backgroundColor: '#D8D8D8' }} />
                 <FlatList
                     style={{ paddingLeft: 2, backgroundColor: 'white' }}
-                    data={this.myClientCheck(this.props.ClientInfo, this.props.UserInsuranceInfo)}
+
+                    data={this.state.clientInfo}
+                    // data={this.myClientCheck(this.props.ClientInfo, this.props.UserInsuranceInfo)}
                     renderItem={({ item }) => (
                         <TouchableOpacity
                             onPress={() => { this.props.navigation.navigate('DetailCustomer', { itemId: item }) }}
@@ -399,8 +373,6 @@ class CustomerListScreen extends React.Component {
                         }, 2000);
                     }}
                 />
-                </View>
-                }
             </View>
         )
     }
@@ -434,4 +406,3 @@ const styles = StyleSheet.create({
         marginTop: 3,
     },
 });
-
